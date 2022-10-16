@@ -11,7 +11,7 @@ Note that downloading blender, cctextures, and bob resources takes some time.
 ```shell
 git clone https://github.com/sheepvs5/BlenderProc
 cd BlenderProc
-python run.py examples/DEH/cctexture.yaml examples/examples/DEH Blender 16 3
+python run.py examples/DEH/cctexture.yaml bob examples/examples/DEH Blender 16 3
 ```
 
 ## Multiple runs at once
