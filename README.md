@@ -257,6 +257,20 @@ If you use BlenderProc in a research project, please cite as follows:
 }
 ```
 
+If you use DEH rendering in your research project, please cite as follows:
+```
+@article{yang2022diffraction,
+  title={Diffraction-engineered holography: Beyond the depth representation limit of holographic displays},
+  author={Yang, Daeho and Seo, Wontaek and Yu, Hyeonseung and Kim, Sun Il and Shin, Bongsu and Lee, Chang-Kun and Moon, Seokil and An, Jungkwuen and Hong, Jong-Young and Sung, Geeyoung and others},
+  journal={Nature Communications},
+  volume={13},
+  number={1},
+  pages={1--11},
+  year={2022},
+  publisher={Nature Publishing Group}
+}
+```
+
 ---
 
 <div align="center">
