@@ -2,7 +2,7 @@
 [Diffraction-engineered holography: Beyond the depth representation limit of holographic displays](https://www.nature.com/articles/s41467-022-33728-5)
 
 <p align="center">
-<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41467-022-33728-5/MediaObjects/41467_2022_33728_Fig3_HTML.png?as=webp" alt="Front readme image" width=500>
+<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41467-022-33728-5/MediaObjects/41467_2022_33728_Fig3_HTML.png?as=webp" alt="Front readme image" width=1900>
 </p>
 
 ## How to use
@@ -17,6 +17,20 @@ python run.py examples/DEH/cctexture.yaml examples/examples/DEH Blender 16 3
 ## Multiple runs at ones
 ```shell
 python rerun.py <# of runs> <config.yaml> <output folder> <Blender folder> <# of objects> <numerical aperture>
+```
+
+## Citation
+```
+@article{yang2022DEH,
+  title={Diffraction-engineered holography: Beyond the depth representation limit of holographic displays},
+  author={Yang, Daeho and Seo, Wontaek and Yu, Hyeonseung and Kim, Sun Il and Shin, Bongsu and Lee, Chang-Kun and Moon, Seokil and An, Jungkwuen and Hong, Jong-Young and Sung, Geeyoung and others},
+  journal={Nature Communications},
+  volume={13},
+  number={1},
+  pages={1--11},
+  year={2022},
+  publisher={Nature Publishing Group}
+}
 ```
 
 # BlenderProc
