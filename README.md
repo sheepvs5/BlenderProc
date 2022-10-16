@@ -14,7 +14,7 @@ cd BlenderProc
 python run.py examples/DEH/cctexture.yaml examples/examples/DEH Blender 16 3
 ```
 
-## Multiple runs at ones
+## Multiple runs at once
 ```shell
 python rerun.py <# of runs> <config.yaml> <output folder> <Blender folder> <# of objects> <numerical aperture>
 ```
