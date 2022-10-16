@@ -1,5 +1,25 @@
-# BlenderProc2
+# Dataset generation for Diffraction-engineered holography
+[Diffraction-engineered holography: Beyond the depth representation limit of holographic displays](https://www.nature.com/articles/s41467-022-33728-5)
 
+<p align="center">
+<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41467-022-33728-5/MediaObjects/41467_2022_33728_Fig3_HTML.png?as=webp" alt="Front readme image" width=500>
+</p>
+
+## How to use
+The dataset can be generated with the following commands (windows 10).
+Note that downloading blender, cctextures, and bob resources takes some time.
+```shell
+git clone https://github.com/sheepvs5/BlenderProc
+cd BlenderProc
+python run.py examples/DEH/cctexture.yaml examples/examples/DEH Blender 16 3
+```
+
+## Multiple runs at ones
+```shell
+python rerun.py <# of runs> <config.yaml> <output folder> <Blender folder> <# of objects> <numerical aperture>
+```
+
+# BlenderProc
 [![Documentation](https://img.shields.io/badge/documentation-passing-brightgreen.svg)](https://dlr-rm.github.io/BlenderProc/)
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DLR-RM/BlenderProc/blob/main/examples/basics/basic/basic_example.ipynb)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)

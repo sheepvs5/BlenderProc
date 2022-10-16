@@ -1,0 +1,393 @@
+{
+  "version": 3,
+  "setup": {
+    "blender_install_path": "<args:2>",
+    "pip": [
+      "h5py",
+      "scikit-image",
+      "pypng==0.0.20",
+      "scipy==1.2.2",
+      "matplotlib==2.2.4"
+    ]
+  },
+  "modules": [
+    {
+      "module": "main.Initializer",
+      "config": {
+        "global": {
+          "output_dir": "<args:1>",
+          "sys_paths": ["bob//bop_toolkit"]
+        },
+        "horizon_color": [0,0,0]
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/tless",
+        "model_type": "cad",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": "<args:3>",
+        "add_properties": {
+          "cp_physics": True
+        }
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/hb",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": "<args:3>",
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/tyol",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": "<args:3>",
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
+    {
+      "module": "loader.BopLoader",
+      "config": {
+        "bop_dataset_path": "<args:0>/ycbv",
+        "model_type": "",
+        "mm2m": True,
+        "sample_objects": True,
+        "num_of_objs_to_sample": "<args:3>",
+        "add_properties": {
+          "cp_physics": True
+        },
+        "cf_set_shading": "SMOOTH"
+      }
+    },
+    {
+      "module": "manipulators.MaterialManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": [
+          {
+            "name": "bop_tless_vertex_col_material.*"
+          },
+          {
+            "name": "bop_hb_vertex_col_material.*"
+          },
+          {
+            "name": "bop_tyol_vertex_col_material.*"
+          },
+          {
+            "name": "bop_ycbv_vertex_col_material.*"
+          }
+          ]
+        },
+        "cf_set_specular": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.0,
+          "max": 1.0
+        },
+        "cf_set_roughness": {
+          "provider": "sampler.Value",
+          "type": "float",
+          "min": 0.0,
+          "max": 1.0
+        }
+      }
+    },
+    {
+      "module": "constructor.BasicMeshInitializer",
+      "config": {
+        "meshes_to_add": [
+        {
+          "type": "plane",
+          "name": "light_plane",
+          "location": [0, 0, -15],
+          "scale": [3, 3, 1]
+        }
+        ]
+      }
+    },
+    {
+      "module": "manipulators.EntityManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Entity",
+          "conditions": {
+            "name": '.*plane.*'
+          }
+        },
+        "cp_physics": False,
+        "cp_physics_collision_shape": "BOX",
+        "cp_category_id": 333
+      }
+    },
+    {
+      "module": "manipulators.MaterialManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": {
+            "name": "light_plane_material"
+          }
+        },
+        "cf_switch_to_emission_shader": {
+          "color": {
+            "provider": "sampler.Color",
+            "min": [0.5, 0.5, 0.5, 1.0],
+            "max": [1.0, 1.0, 1.0, 1.0]
+          },
+          "strength": {
+            "provider": "sampler.Value",
+            "type": "float",
+            "min": 20,
+            "max": 30
+          }
+        }
+      }
+    },
+    {
+      "module": "loader.CCMaterialLoader",
+      "config": {
+        "folder_path": "resources/cctextures"
+      }
+    },
+    {
+      "module": "manipulators.EntityManipulator",
+      "config": {
+        "selector": {
+          "provider": "getter.Entity",
+          "conditions": {
+            "cp_physics": True
+          }
+        },
+        "mode": "once_for_each",
+        "cf_randomize_materials": {
+          "randomization_level": 1,
+          "materials_to_replace_with": {
+            "provider": "getter.Material",
+            "random_samples": 1,
+            "conditions": {
+              "cp_is_cc_texture": True
+            }
+          }
+        },
+        "cf_add_uv_mapping":{
+          "projection": "smart",
+        }
+      }
+    },    
+    {
+      "module": "depthutil.ObjectPoseRandz",
+      "config": {
+        "objects_to_sample": {
+          "provider": "getter.Entity",
+          "conditions": {
+            "cp_physics": True
+          }
+        },
+        "min": [-0.3, -0.3, -0.45],
+        "max": [0.3, 0.3, 0.45],
+        "rel_rand": 0.05,
+        "rot_sampler":{
+          "provider": "sampler.UniformSO3"
+        }
+      }
+    },
+    {
+      "module": "lighting.LightSampler",
+      "config": {
+        "lights": [
+        {
+          "location": {
+            "provider": "sampler.Shell",
+            "center": [0, 0, 0],
+            "radius_min": 1, # now depends on the bottom area of the box
+            "radius_max": 1.5, # this one too
+            "elevation_min": 5,
+            "elevation_max": 89,
+            "uniform_elevation": True
+          },
+          "color": {
+            "provider": "sampler.Color",
+            "min": [0.5, 0.5, 0.5, 1.0],
+            "max": [1.0, 1.0, 1.0, 1.0]
+          },
+          "type": "POINT",
+          "energy": 5
+        },
+        {
+          "location": {
+            "provider": "sampler.Shell",
+            "center": [0, 0, 0],
+            "radius_min": 1, # now depends on the bottom area of the box
+            "radius_max": 1.5, # this one too
+            "elevation_min": 5,
+            "elevation_max": 89,
+            "uniform_elevation": True
+          },
+          "color": {
+            "provider": "sampler.Color",
+            "min": [0.5, 0.5, 0.5, 1.0],
+            "max": [1.0, 1.0, 1.0, 1.0]
+          },
+          "type": "POINT",
+          "energy": 5
+        },
+        {
+          "location": {
+            "provider": "sampler.Shell",
+            "center": [0, 0, 0],
+            "radius_min": 1, # now depends on the bottom area of the box
+            "radius_max": 1.5, # this one too
+            "elevation_min": 5,
+            "elevation_max": 89,
+            "uniform_elevation": True
+          },
+          "color": {
+            "provider": "sampler.Color",
+            "min": [0.5, 0.5, 0.5, 1.0],
+            "max": [1.0, 1.0, 1.0, 1.0]
+          },
+          "type": "POINT",
+          "energy": 5
+        }                
+        ]
+      }
+    },
+    {
+      "module": "camera.CameraSampler",
+      "config": {
+        "intrinsics": {
+          "resolution_x": 512,
+          "resolution_y": 512,
+          "fov" : 0.065
+        },
+        "cam_poses": [
+        {
+          "proximity_checks": {
+            "min": 0.3
+          },
+          "excluded_objs_in_proximity_check":  {
+            "provider": "getter.Entity",
+            "conditions": {
+              "name": "ground_plane.*",
+              "type": "MESH"
+            }
+          },
+          "number_of_samples": 1,
+          "location": {
+            "provider": "sampler.Sphere",
+            "center": [0, 0, -10],
+            "radius": 0,
+            "mode": "SURFACE"
+          },
+          "rotation": {
+            "format": "look_at",
+            "value": [0, 0, 0],
+            "inplane_rot": {
+              "provider": "sampler.Value",
+              "type": "float",
+              "min": 0,
+              "max": 0
+            }
+          }
+        }
+        ]
+      }
+    },
+    {
+      "module": "depthutil.CameraDepthSampler",
+      "config": {
+        "cam_dofs": [
+        {"focus_distance": 10, "aperture_fstop": 500, "frame": 0},
+        {"focus_distance": 9.50, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.55, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.60, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.65, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.70, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.75, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.80, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.85, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.90, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 9.95, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.00, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.05, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.10, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.15, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.20, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.25, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.30, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.35, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.40, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.45, "aperture_fstop": "<args:4>"},
+        {"focus_distance": 10.50, "aperture_fstop": "<args:4>"},
+        ]
+      }
+    },
+    {
+      "module": "depthutil.LinkChanger",
+      "config": {
+        "selector": {
+          "provider": "getter.Material",
+          "conditions": {
+            "name": ".*"
+          }
+        },
+        "input_node_unlink": True,
+        "input_node_name": "Principled BSDF",
+        "input_link_type": "Alpha",
+      }
+    },
+    {
+      "module": "depthutil.DepthRegularizerUtility",
+      "config": {
+        "iterMax": 1,
+        "score": 0.85,
+        "depth_range": [9.5,10.5],
+        "depth_center": 10,
+        "items_to_move_at_once": 3
+      }
+    },
+    {
+      "module": "depthutil.DepthOverlayUtility",
+      "config": {
+        "number_of_samples": 10,
+        "key": "depth_overlay",
+      }
+    },
+    {
+      "module": "renderer.RgbRenderer",
+      "config": {
+        # "samples": 200,
+        "samples": 50,
+        "render_depth": True,
+        "image_type": "PNG",
+      }
+    },
+    {
+      "module": "depthutil.DepthWriter",
+      "config": {
+        "dmin": 9.5,
+        "dmax": 10.5,
+        "write_all_depth": True,
+        "additional_key": "depth_overlay",
+      }
+    }
+  ]
+}
