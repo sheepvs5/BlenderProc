@@ -12,7 +12,7 @@ used_arguments = sys.argv[2:]
 
 for run_id in range(amount_of_runs):
     # in each run, the arguments are reused
-    cmd = ["python", os.path.join(rerun_folder, "run.py")]
+    cmd = ["python", os.path.join(rerun_folder, "cli.py")]
     cmd.extend(used_arguments)
     # the only exception is the output, which gets changed for each run, so that the examples are not overwritten
     print(" ".join(cmd))
