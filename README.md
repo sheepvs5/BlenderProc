@@ -9,9 +9,11 @@
 The dataset can be generated with the following commands (windows 10).
 Note that downloading blender, cctextures, and bob resources takes some time.
 ```shell
+pip install progressbar
 git clone https://github.com/sheepvs5/BlenderProc
 cd BlenderProc
-python run.py examples/DEH/cctexture.yaml bob examples/examples/DEH Blender 16 3
+python scripts/download_cc_textures.py
+python run.py %cd%/examples/DEH/cctexture.yaml %cd%/bob %cd%/examples/DEH %cd%/Blender 16 3
 ```
 
 ## Multiple runs at once
