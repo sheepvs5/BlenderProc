@@ -9,11 +9,11 @@ One-two sentences explaining the main focus of the example, e.g. new module/feat
 Execute in the Blender-Pipeline main directory:
 
 ```
-blenderproc run ...
+python run.py ...
 ``` 
 
-* `examples/advanced/YOUR_MODULE/config.yaml`: explanation
-* `examples/resources/camera_positions`: explanation
+* `examples/basic/config.yaml`: explanation
+* `examples/basic/camera_positions`: explanation
 * ...
 
 ## Visualization
@@ -21,7 +21,7 @@ blenderproc run ...
 Visualize the generated data if it is stored in a container.
 
 ```
-blenderproc vis hdf5 path/to/output/0.hdf5
+python scripts/visHdf5Files.py path/to/output/0.hdf5
 ```
 
 ## Steps
