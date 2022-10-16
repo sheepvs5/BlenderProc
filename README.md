@@ -19,20 +19,6 @@ python run.py examples/DEH/cctexture.yaml examples/examples/DEH Blender 16 3
 python rerun.py <# of runs> <config.yaml> <output folder> <Blender folder> <# of objects> <numerical aperture>
 ```
 
-## Citation
-```
-@article{yang2022DEH,
-  title={Diffraction-engineered holography: Beyond the depth representation limit of holographic displays},
-  author={Yang, Daeho and Seo, Wontaek and Yu, Hyeonseung and Kim, Sun Il and Shin, Bongsu and Lee, Chang-Kun and Moon, Seokil and An, Jungkwuen and Hong, Jong-Young and Sung, Geeyoung and others},
-  journal={Nature Communications},
-  volume={13},
-  number={1},
-  pages={1--11},
-  year={2022},
-  publisher={Nature Publishing Group}
-}
-```
-
 # BlenderProc
 [![Documentation](https://img.shields.io/badge/documentation-passing-brightgreen.svg)](https://dlr-rm.github.io/BlenderProc/)
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DLR-RM/BlenderProc/blob/main/examples/basics/basic/basic_example.ipynb)
